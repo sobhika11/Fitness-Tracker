@@ -1,0 +1,125 @@
+.dashboard-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.meal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.checkbox-group label {
+  font-weight: bold;
+}
+
+.meal-form textarea {
+  margin-top: 10px;
+  padding: 8px;
+  height: 80px;
+  resize: none;
+}
+
+.meal-form button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.meal-form button:hover {
+  background-color: #0056b3;
+}
+
+.streak-display {
+  margin-top: 30px;
+  font-size: 20px;
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
+.water-tracker {
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px solid #007bff;
+  border-radius: 8px;
+  background-color: #e9f5ff;
+  text-align: center;
+}
+
+.water-tracker p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.water-tracker button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #00bfff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.water-tracker button:hover {
+  background-color: #009acd;
+}
+.meal-suggestions {
+  margin-top: 40px;
+}
+
+.meal-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.meal-card {
+  flex: 1 1 30%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff3e6;
+}
+
+.meal-card h4 {
+  margin-bottom: 10px;
+  color: #cc6600;
+}
+
+.meal-card ul {
+  padding-left: 20px;
+}
+.exercise-suggestions {
+  margin-top: 40px;
+  padding: 15px;
+  border: 1px solid #8b008b;
+  border-radius: 8px;
+  background-color: #f9f0ff;
+}
+
+.exercise-suggestions h3 {
+  color: #8b008b;
+  margin-bottom: 10px;
+}
+
+.exercise-suggestions ul {
+  padding-left: 20px;
+}

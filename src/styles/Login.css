@@ -1,0 +1,19 @@
+.login-container {
+  text-align: center;
+  margin-top: 100px;
+  padding: 20px;
+}
+
+.google-login-btn {
+  padding: 10px 20px;
+  background-color: #4285f4;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.google-login-btn:hover {
+  background-color: #357ae8;
+}
