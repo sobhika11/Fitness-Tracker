@@ -1,22 +1,51 @@
+/* Navbar.css */
+
 .navbar {
+  background: linear-gradient(90deg, #141e30, #243b55);
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  padding: 10px 20px;
-  color: white;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.nav-links a {
-  margin-left: 15px;
-  color: white;
+.navbar-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00d8ff;
+  margin: 0;
+}
+
+.navbar-right a {
+  margin-left: 20px;
   text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
-  text-decoration: underline;
+.navbar-right a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #00d8ff;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
 }
 
-.logo {
-  font-weight: bold;
+.navbar-right a:hover::after {
+  width: 100%;
+}
+
+.navbar-right a:hover {
+  color: #00d8ff;
 }

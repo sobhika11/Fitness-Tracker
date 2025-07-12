@@ -5,10 +5,14 @@ import "./Navbar.css";
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <h3>FitTrack</h3>
-      <Link to="/dashboard">Dashboard</Link>
-      <Link to="/profile">Profile</Link>
-      <Link to="/">Logout</Link>
+      <div className="navbar-left">
+        <h2 className="navbar-logo">FitTrack</h2>
+      </div>
+      <div className="navbar-right">
+        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/profile">Profile</Link>
+        <Link to="/">Logout</Link>
+      </div>
     </nav>
   );
 };
