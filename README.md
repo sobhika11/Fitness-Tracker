@@ -1,2 +1,2 @@
-# Fitness-Tracker
-A website which enables user to track their fitness, this prescribes the diet plan according the users region. It also have an feature of maintaining streak
+# FitTrack - Fitness Tracker
+This is a collaborative React.js project for meal and streak tracking.
