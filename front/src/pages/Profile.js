@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Profile.css";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem("user")); // 👈 from Google Sign-In
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +19,19 @@ const Profile = () => {
     profession: "",
   });
 
+  // 🔐 Redirect if not logged in
+  useEffect(() => {
+    if (!user?.email) {
+      navigate("/");
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.name || "",
+        email: user.email || "",
+      }));
+    }
+  }, [navigate, user]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -26,16 +41,14 @@ const Profile = () => {
     e.preventDefault();
 
     try {
-      
       await axios.post("http://localhost:5000/api/profile", formData);
 
-      
       localStorage.setItem("userEmail", formData.email);
 
       alert("Profile submitted successfully!");
       navigate("/dashboard");
     } catch (err) {
-      console.error("Error submitting profile:", err.message);
+      console.error("❌ Error submitting profile:", err.message);
       alert("Failed to submit profile");
     }
   };
@@ -48,7 +61,7 @@ const Profile = () => {
         <input type="text" name="name" value={formData.name} onChange={handleChange} required />
 
         <label>Email:</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        <input type="email" name="email" value={formData.email} onChange={handleChange} readOnly />
 
         <label>Age:</label>
         <input type="number" name="age" value={formData.age} onChange={handleChange} required />
