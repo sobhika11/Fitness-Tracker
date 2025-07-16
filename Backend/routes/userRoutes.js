@@ -4,6 +4,7 @@ const User = require("../models/user");
 
 // Handle form data POST
 router.post("/", async (req, res) => {
+  console.log("🔥 Received data:", req.body); 
   try {
     const { name, email, age, weight, height, activityLevel ,profession} = req.body;
 
