@@ -1,0 +1,28 @@
+.streak-water {
+  margin-left: 240px;
+  padding: 40px;
+}
+
+.streak-badge {
+  background-color: #fff3cd;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
+
+.water-tracker {
+  background-color: #dff0ea;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.water-tracker button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #40b4c4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

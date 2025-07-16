@@ -3,28 +3,28 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f8fa;
+  background: linear-gradient(120deg, #f6f6f6, #dff4f5);
 }
 
 .login-box {
-  text-align: center;
-  padding: 3rem;
+  padding: 40px;
   background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.brand {
+  color: #40b4c4;
 }
 
 .login-box h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.login-box .brand {
-  color: #00b894;
-  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 32px;
 }
 
 .login-box p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
+  font-size: 16px;
   color: #555;
 }
