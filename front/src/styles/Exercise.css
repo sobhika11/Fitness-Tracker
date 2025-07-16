@@ -1,0 +1,17 @@
+.exercise {
+  margin-left: 240px;
+  padding: 40px;
+}
+
+.exercise h3 {
+  margin-bottom: 20px;
+}
+
+.exercise ul {
+  list-style-type: circle;
+  padding-left: 20px;
+}
+
+.exercise li {
+  margin: 10px 0;
+}

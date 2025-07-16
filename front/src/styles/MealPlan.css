@@ -1,0 +1,45 @@
+.meal-plan {
+  margin-left: 240px;
+  padding: 40px;
+}
+
+.meal-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meal-card {
+  flex: 1;
+  min-width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.meal-form {
+  margin-top: 30px;
+}
+
+.meal-form label {
+  display: block;
+  margin: 10px 0;
+}
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+button[type="submit"] {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #40b4c4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}

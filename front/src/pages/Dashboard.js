@@ -25,17 +25,19 @@ const Dashboard = () => {
     if (!userEmail) navigate("/");
   }, [userEmail, navigate]);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5000/api/profile?email=${userEmail}`);
-        if (res.data) setProfile(res.data);
-      } catch (err) {
-        console.error("Error fetching profile:", err.message);
-      }
-    };
-    fetchProfile();
-  }, [userEmail]);
+useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/profile?email=${userEmail}`);
+      console.log("✅ Profile fetched:", res.data); // ✅ Log success
+      setProfile(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching profile:", err.message);
+    }
+  };
+  fetchProfile();
+}, [userEmail]);
+
 
   useEffect(() => {
     const savedStreak = localStorage.getItem("fittrackStreak");
