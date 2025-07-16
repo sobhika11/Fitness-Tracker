@@ -15,53 +15,38 @@ const Dashboard = () => {
   const [streak, setStreak] = useState(0);
   const [lastSubmitted, setLastSubmitted] = useState(null);
   const [waterCount, setWaterCount] = useState(0);
-
   const waterGoal = 8;
 
-  // User Info
   const userEmail = localStorage.getItem("userEmail");
   const userName = localStorage.getItem("userName");
   const userPicture = localStorage.getItem("userPicture");
 
   useEffect(() => {
-    if (!userEmail) {
-      navigate("/");
-    }
+    if (!userEmail) navigate("/");
   }, [userEmail, navigate]);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/profile?email=${userEmail}`
-        );
-        if (res.data) {
-          setProfile(res.data);
-        } else {
-          setProfile(null);
-        }
+        const res = await axios.get(`http://localhost:5000/api/profile?email=${userEmail}`);
+        if (res.data) setProfile(res.data);
       } catch (err) {
         console.error("Error fetching profile:", err.message);
       }
     };
-
-    if (userEmail) fetchProfile();
+    fetchProfile();
   }, [userEmail]);
 
   useEffect(() => {
     const savedStreak = localStorage.getItem("fittrackStreak");
     const savedDate = localStorage.getItem("fittrackLastSubmit");
-
     if (savedStreak) setStreak(parseInt(savedStreak));
     if (savedDate) setLastSubmitted(savedDate);
   }, []);
 
   const handleMealChange = (e) => {
     const { name, checked } = e.target;
-    setMeals((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
+    setMeals((prev) => ({ ...prev, [name]: checked }));
   };
 
   const handleSubmit = (e) => {
@@ -89,18 +74,12 @@ const Dashboard = () => {
     localStorage.setItem("fittrackLastSubmit", today);
   };
 
-  const mockExerciseLevel = profile?.exerciseLevel || "medium";
+  const activity = profile?.physicalActivity || "medium";
 
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
       <div className="sidebar">
-        <img
-          src={userPicture}
-          alt="Profile"
-          className="sidebar-avatar"
-          onClick={() => navigate("/profile")}
-        />
+        <img src={userPicture} alt="Profile" className="sidebar-avatar" onClick={() => navigate("/profile")} />
         <p>{userName}</p>
       </div>
 
@@ -115,23 +94,18 @@ const Dashboard = () => {
               <h3>👋 Hello, {profile.name}!</h3>
               <p>📧 Email: {profile.email}</p>
               <p>🎂 Age: {profile.age}</p>
-              <p>📅 DOB: {profile.dob}</p>
+              <p>📅 DOB: {new Date(profile.dateOfBirth).toDateString()}</p>
               <p>📏 Height: {profile.height} cm</p>
               <p>⚖️ Weight: {profile.weight} kg</p>
-              <p>🏋️ Activity Level: {profile.exerciseLevel}</p>
-              <p>💼 Profession: {profile.profession}</p>
+              <p>🏋️ Activity Level: {profile.physicalActivity}</p>
+              <p>💼 Occupation: {profile.occupation}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="meal-form">
               <div className="meal-checks">
                 {["breakfast", "lunch", "dinner"].map((meal) => (
                   <label key={meal}>
-                    <input
-                      type="checkbox"
-                      name={meal}
-                      checked={meals[meal]}
-                      onChange={handleMealChange}
-                    />
+                    <input type="checkbox" name={meal} checked={meals[meal]} onChange={handleMealChange} />
                     {meal === "breakfast" && "🍳 Breakfast"}
                     {meal === "lunch" && "🍱 Lunch"}
                     {meal === "dinner" && "🍲 Dinner"}
@@ -140,11 +114,7 @@ const Dashboard = () => {
               </div>
 
               <label>🍔 Extra Foods Taken:</label>
-              <textarea
-                value={extraFood}
-                onChange={(e) => setExtraFood(e.target.value)}
-                placeholder="Snacks, desserts, drinks, etc."
-              />
+              <textarea value={extraFood} onChange={(e) => setExtraFood(e.target.value)} placeholder="Snacks, desserts, drinks, etc." />
 
               <button type="submit">✅ Submit for Today</button>
             </form>
@@ -155,18 +125,8 @@ const Dashboard = () => {
 
             <div className="water-tracker">
               💧 Water Intake:
-              <p>
-                {waterCount} / {waterGoal} glasses
-              </p>
-              <button
-                onClick={() =>
-                  setWaterCount((prev) =>
-                    prev < waterGoal ? prev + 1 : prev
-                  )
-                }
-              >
-                + Add Glass
-              </button>
+              <p>{waterCount} / {waterGoal} glasses</p>
+              <button onClick={() => setWaterCount((prev) => (prev < waterGoal ? prev + 1 : prev))}>+ Add Glass</button>
             </div>
 
             <div className="meal-suggestions">
@@ -204,23 +164,23 @@ const Dashboard = () => {
             </div>
 
             <div className="exercise-suggestions">
-              <h3>🏋️ Exercise Recommendations ({mockExerciseLevel.toUpperCase()})</h3>
+              <h3>🏋️ Exercise Recommendations ({activity.toUpperCase()})</h3>
               <ul>
-                {mockExerciseLevel === "light" && (
+                {activity === "light" && (
                   <>
                     <li>10-minute stretching</li>
                     <li>5-minute breathing exercise</li>
                     <li>Walk around your home</li>
                   </>
                 )}
-                {mockExerciseLevel === "medium" && (
+                {activity === "medium" && (
                   <>
                     <li>15-minute yoga</li>
                     <li>20 squats + 15 push-ups</li>
                     <li>10-minute brisk walk</li>
                   </>
                 )}
-                {mockExerciseLevel === "heavy" && (
+                {activity === "heavy" && (
                   <>
                     <li>30-minute cardio (running/cycling)</li>
                     <li>40 push-ups + 40 squats</li>

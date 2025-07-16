@@ -1,31 +1,30 @@
 .login-container {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #43cea2, #185a9d);
-  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  background-color: #f5f8fa;
 }
 
 .login-box {
-  background-color: white;
-  padding: 40px;
-  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 3rem;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .login-box h1 {
-  margin-bottom: 10px;
-  font-size: 28px;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .login-box .brand {
-  color: #2e7d32;
+  color: #00b894;
   font-weight: bold;
 }
 
 .login-box p {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   color: #555;
 }

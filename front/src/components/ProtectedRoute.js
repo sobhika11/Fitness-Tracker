@@ -1,13 +1,9 @@
-// src/components/ProtectedRoute.js
-
 import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const isAuthenticated = user && user.email;
-
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+  const user = localStorage.getItem("userEmail");
+  return user ? children : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

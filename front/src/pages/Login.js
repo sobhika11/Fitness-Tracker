@@ -10,17 +10,15 @@ const Login = () => {
   const handleLoginSuccess = (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
-      const user = {
-        email: decoded.email,
-        name: decoded.name,
-        picture: decoded.picture,
-      };
+      console.log("Decoded:", decoded);
 
-      // Save user to localStorage
-      localStorage.setItem("user", JSON.stringify(user));
+      // Save to localStorage
+      localStorage.setItem("userEmail", decoded.email);
+      localStorage.setItem("userName", decoded.name);
+      localStorage.setItem("userPicture", decoded.picture);
 
-      // Navigate to Dashboard
-      navigate("/dashboard");
+      // ✅ Redirect
+      navigate("/profile");
     } catch (error) {
       console.error("JWT Decode failed:", error);
       alert("Login failed. Please try again.");
