@@ -1,59 +1,44 @@
 .profile-container {
+  padding: 40px;
   max-width: 600px;
-  margin: 50px auto;
-  background: #ffffff;
-  padding: 40px 30px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  margin: auto;
   font-family: 'Segoe UI', sans-serif;
 }
 
-.profile-container h2 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 30px;
-  font-size: 1.8rem;
-}
-
 .profile-form {
-  display: flex;
-  flex-direction: column;
+  background-color: #f4f4f4;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .profile-form label {
-  margin: 12px 0 5px;
+  display: block;
+  margin-bottom: 6px;
   font-weight: 600;
-  color: #555;
+  margin-top: 15px;
 }
 
 .profile-form input,
 .profile-form select {
-  padding: 12px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: 0.3s ease;
-}
-
-.profile-form input:focus,
-.profile-form select:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+  margin-bottom: 10px;
 }
 
 .profile-form button {
-  margin-top: 25px;
-  background-color: #007bff;
+  background-color: #2e7d32;
   color: white;
-  font-size: 1.1rem;
-  padding: 14px;
   border: none;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s ease;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 .profile-form button:hover {
-  background-color: #0056b3;
+  background-color: #256427;
 }
