@@ -3,15 +3,18 @@ const router=express.Router();
 const User=require("../models/user");
 router.post("/update",async (req,res)=>{
 try{
-    const{id}=req.body;
+    const { id, meals } = req.body;
     const user=await User.findById(id);
-    if(!user)
-    {
-        return res.status(404).json({message:"user Not found,Kindly create an profile in our website to continue!"})
+    if (!user) {
+        return res.status(404).json({ message: "User Not found. Kindly create a profile on our website to continue!" });
+    }
+    const { breakfast, lunch, dinner } = meals || {};
+    if (!breakfast || !lunch || !dinner) {
+        return res.status(400).json({ message: "Complete all 3 meals to update your streak!" });
     }
     const today=new Date().toDateString();
-    const lastactive=user.lastActiveDate? new Date(user.lastActiveDate).toDateString():null;
-    if(lastactive===today)
+    const lastActive=user.lastActiveDate? new Date(user.lastActiveDate).toDateString():null;
+    if(lastActive===today)
     {
         return res.status(200).json({message:"Steak already submitted for Today!"})
     }
@@ -21,6 +24,9 @@ try{
 
     user.streak = isYesterday ? user.streak + 1 : 1;
     user.lastActiveDate = new Date();
+    await user.save();
+    return res.status(200).json({message:"Streak Updated!",streak:user.streak});
+
 }catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
