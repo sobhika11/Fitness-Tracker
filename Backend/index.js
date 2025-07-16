@@ -7,20 +7,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Test Route
 app.get("/", (req, res) => {
   res.send("Fitness Tracker API is running!");
 });
 const authRoutes = require("./routes/authroutes");
 app.use("/api/auth", authRoutes);
 
-// Connect to MongoDBmongoose
+const profileRoutes = require("./routes/profileRoutes");
+app.use("/api/profile", profileRoutes);
+const streakRoutes = require("./routes/streakRoutes");
+app.use("/api/streak", streakRoutes);
+
+// Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/fitness-tracker")
   .then(() => {
     console.log("✅ MongoDB connected!");
-    app.listen(5000, () => {
-      console.log("🚀 Server running at http://localhost:5000");
+    app.listen(process.env.PORT || 5000, () => {
+      console.log("🚀 Server running at http://localhost:" + (process.env.PORT || 5000));
     });
   })
   .catch((err) => {
