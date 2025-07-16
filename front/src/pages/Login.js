@@ -10,13 +10,17 @@ const Login = () => {
   const handleLoginSuccess = (credentialResponse) => {
     try {
       const decoded = jwtDecode(credentialResponse.credential);
-      const email = decoded.email;
+      const user = {
+        email: decoded.email,
+        name: decoded.name,
+        picture: decoded.picture,
+      };
 
-      // Save email to localStorage
-      localStorage.setItem("userEmail", email);
+      // Save user to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
 
-      // Redirect to Profile page
-      navigate("/profile");
+      // Navigate to Dashboard
+      navigate("/dashboard");
     } catch (error) {
       console.error("JWT Decode failed:", error);
       alert("Login failed. Please try again.");
@@ -26,9 +30,14 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>Welcome to <span className="brand">FitTrack</span></h1>
+        <h1>
+          Welcome to <span className="brand">FitTrack</span>
+        </h1>
         <p>Please sign in to continue</p>
-        <GoogleLogin onSuccess={handleLoginSuccess} onError={() => alert("Login Failed")} />
+        <GoogleLogin
+          onSuccess={handleLoginSuccess}
+          onError={() => alert("Login Failed")}
+        />
       </div>
     </div>
   );
