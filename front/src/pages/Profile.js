@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Profile.css";
 
 const Profile = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: localStorage.getItem("userName") || "",
     email: localStorage.getItem("userEmail") || "",
@@ -24,17 +25,18 @@ const Profile = () => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/api/profile", formData);
+      localStorage.setItem("activityLevel", formData.physicalActivity);
       alert("Profile submitted successfully!");
-      navigate("/dashboard");
+      navigate("/profile-details");
     } catch (err) {
-      console.error("❌ Error submitting profile:", err.message);
+      console.error("Error submitting profile:", err.message);
       alert("Failed to submit profile");
     }
   };
 
   return (
     <div className="profile-container">
-      <h2>User Profile</h2>
+      <h2>👤 Complete Your Profile</h2>
       <form onSubmit={handleSubmit} className="profile-form">
         <label>Name:</label>
         <input type="text" name="name" value={formData.name} onChange={handleChange} required />

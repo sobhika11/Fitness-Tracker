@@ -10,9 +10,11 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
 
 function App() {
+  const isLoggedIn = localStorage.getItem("userEmail");
+
   return (
     <Router>
-      <Sidebar />
+      {isLoggedIn && <Sidebar />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route

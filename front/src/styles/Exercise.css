@@ -1,17 +1,38 @@
-.exercise {
+.exercise-container {
   margin-left: 240px;
-  padding: 40px;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
 }
 
-.exercise h3 {
-  margin-bottom: 20px;
+.exercise-container h2 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
 }
 
-.exercise ul {
-  list-style-type: circle;
+.exercise-level {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.06);
+  max-width: 600px;
+}
+
+.exercise-level h3 {
+  font-size: 22px;
+  color: #34495e;
+  margin-bottom: 1rem;
+}
+
+.exercise-level ul {
+  list-style-type: square;
   padding-left: 20px;
 }
 
-.exercise li {
-  margin: 10px 0;
+.exercise-level li {
+  margin-bottom: 0.75rem;
+  font-size: 16px;
+  color: #2f3640;
 }

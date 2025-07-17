@@ -1,30 +1,39 @@
-.login-container {
+.login-wrapper {
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(120deg, #f6f6f6, #dff4f5);
+  background: linear-gradient(to bottom right, #81ecec, #74b9ff);
+  font-family: "Segoe UI", sans-serif;
 }
 
 .login-box {
-  padding: 40px;
   background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 3rem 4rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
-}
-
-.brand {
-  color: #40b4c4;
+  max-width: 400px;
 }
 
 .login-box h1 {
-  margin-bottom: 10px;
-  font-size: 32px;
+  margin-bottom: 0.5rem;
+  color: #2d3436;
+  font-size: 28px;
+}
+
+.login-box .brand {
+  color: #0984e3;
+  font-weight: bold;
 }
 
 .login-box p {
-  margin-bottom: 20px;
+  color: #636e72;
+  margin-bottom: 2rem;
   font-size: 16px;
-  color: #555;
+}
+
+#google-login-btn {
+  display: flex;
+  justify-content: center;
 }

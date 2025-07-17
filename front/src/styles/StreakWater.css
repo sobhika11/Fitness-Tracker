@@ -1,28 +1,51 @@
-.streak-water {
+.streak-water-container {
   margin-left: 240px;
-  padding: 40px;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #ecf0f1;
+  min-height: 100vh;
+}
+
+.streak-section,
+.water-section {
+  background-color: #ffffff;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.streak-section h2,
+.water-section h2 {
+  font-size: 24px;
+  color: #2d3436;
+  margin-bottom: 1rem;
 }
 
 .streak-badge {
-  background-color: #fff3cd;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
-  font-size: 18px;
+  font-size: 20px;
+  color: #d63031;
+  font-weight: bold;
 }
 
-.water-tracker {
-  background-color: #dff0ea;
-  padding: 20px;
-  border-radius: 12px;
+.water-count {
+  font-size: 20px;
+  margin: 0.5rem 0;
+  color: #0984e3;
+  font-weight: bold;
 }
 
-.water-tracker button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  background-color: #40b4c4;
-  color: white;
+.water-button {
+  padding: 0.6rem 1.2rem;
+  background-color: #0984e3;
+  color: #ffffff;
+  font-weight: bold;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.water-button:hover {
+  background-color: #74b9ff;
 }
