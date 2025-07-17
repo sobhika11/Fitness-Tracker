@@ -9,15 +9,15 @@ const MealPlan = () => {
   };
 
   return (
-    <div className="meal-plan-container">
+    <div className="mealplan-container">
       <h2>🍽️ Today's Meal Plan</h2>
       <div className="meal-cards">
         {Object.entries(meals).map(([meal, items]) => (
           <div className="meal-card" key={meal}>
-            <h4>{meal}</h4>
+            <h3>{meal}</h3>
             <ul>
-              {items.map((food, i) => (
-                <li key={i}>✔️ {food}</li>
+              {items.map((item, index) => (
+                <li key={index}>✅ {item}</li>
               ))}
             </ul>
           </div>

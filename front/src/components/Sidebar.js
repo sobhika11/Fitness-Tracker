@@ -8,23 +8,23 @@ const Sidebar = () => {
   const userPicture = localStorage.getItem("userPicture");
 
   const handleLogout = () => {
-    localStorage.clear(); // Clear all stored data (email, name, picture, etc.)
-    navigate("/"); // Redirect to login page
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
     <div className="sidebar">
-      <img src={userPicture} alt="Profile" className="sidebar-avatar" />
-      <p className="sidebar-user">{userName}</p>
+      <div className="profile-section">
+        <img src={userPicture} alt="Profile" className="avatar" />
+        <p>{userName}</p>
+      </div>
       <nav className="sidebar-nav">
         <Link to="/profile-details">👤 Profile</Link>
         <Link to="/streak">🔥 Streak</Link>
-        <Link to="/meals">🍱 Meal Plan</Link>
+        <Link to="/meals">🍽️ Meals</Link>
         <Link to="/exercise">🏋️ Exercise</Link>
+        <button className="logout-btn" onClick={handleLogout}>🚪 Logout</button>
       </nav>
-      <button className="logout-btn" onClick={handleLogout}>
-        🚪 Logout
-      </button>
     </div>
   );
 };

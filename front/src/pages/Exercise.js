@@ -4,7 +4,7 @@ import "../styles/Exercise.css";
 const Exercise = () => {
   const activity = localStorage.getItem("activityLevel") || "medium";
 
-  const recommendations = {
+  const exercisePlans = {
     light: [
       "10-minute stretching",
       "5-minute breathing exercise",
@@ -24,10 +24,11 @@ const Exercise = () => {
 
   return (
     <div className="exercise-container">
-      <h2>🏋️ Exercise Recommendations ({activity.toUpperCase()})</h2>
-      <ul>
-        {recommendations[activity].map((item, index) => (
-          <li key={index}>✔️ {item}</li>
+      <h2>🏋️ Exercise Recommendations</h2>
+      <p className="level-tag">Level: {activity.toUpperCase()}</p>
+      <ul className="exercise-list">
+        {exercisePlans[activity].map((exercise, index) => (
+          <li key={index}>💪 {exercise}</li>
         ))}
       </ul>
     </div>

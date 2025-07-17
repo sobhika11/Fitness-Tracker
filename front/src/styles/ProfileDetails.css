@@ -1,19 +1,54 @@
-.profile-details {
+.profile-details-container {
   margin-left: 240px;
-  padding: 40px;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f5f6fa;
+  min-height: 100vh;
 }
 
-.profile-details h2 {
-  margin-bottom: 20px;
-}
-
-.profile-info {
-  background-color: white;
-  padding: 30px;
+.profile-details-card {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  max-width: 700px;
 }
 
-.profile-info p {
-  margin: 10px 0;
+.profile-details-card h2 {
+  font-size: 26px;
+  margin-bottom: 1rem;
+  color: #2d3436;
+}
+
+.profile-field {
+  margin-bottom: 1rem;
+}
+
+.profile-field label {
+  font-weight: bold;
+  color: #636e72;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.profile-field span {
+  display: block;
+  font-size: 16px;
+  color: #2d3436;
+}
+
+.update-button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  background-color: #00b894;
+  color: #ffffff;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #019875;
 }

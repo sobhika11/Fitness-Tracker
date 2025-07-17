@@ -1,33 +1,53 @@
 .profile-container {
   margin-left: 240px;
-  padding: 40px;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background: #f1f2f6;
+  min-height: 100vh;
+}
+
+.profile-container h2 {
+  font-size: 28px;
+  color: #2d3436;
+  margin-bottom: 1.5rem;
 }
 
 .profile-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
 }
 
 .profile-form label {
-  font-weight: bold;
-  margin-top: 10px;
+  display: block;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+  color: #2d3436;
 }
 
 .profile-form input,
 .profile-form select {
-  padding: 8px;
-  border: 1px solid #ccc;
+  width: 100%;
+  padding: 0.6rem;
   border-radius: 8px;
+  border: 1px solid #b2bec3;
+  font-size: 14px;
 }
 
-button[type="submit"] {
-  grid-column: span 2;
-  padding: 12px;
-  background-color: #40b4c4;
+.profile-form button {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background-color: #0984e3;
   color: white;
-  border: none;
-  border-radius: 10px;
   font-weight: bold;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.profile-form button:hover {
+  background-color: #0077cc;
 }

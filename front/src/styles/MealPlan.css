@@ -1,45 +1,50 @@
-.meal-plan {
+.meal-plan-container {
   margin-left: 240px;
-  padding: 40px;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.meal-plan-container h2 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
 }
 
 .meal-cards {
   display: flex;
-  gap: 20px;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
 .meal-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
   flex: 1;
   min-width: 250px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
 }
 
-.meal-form {
-  margin-top: 30px;
+.meal-card:hover {
+  transform: translateY(-5px);
 }
 
-.meal-form label {
-  display: block;
-  margin: 10px 0;
+.meal-card h3 {
+  font-size: 22px;
+  margin-bottom: 1rem;
+  color: #34495e;
 }
 
-textarea {
-  width: 100%;
-  min-height: 80px;
-  border-radius: 8px;
-  padding: 8px;
+.meal-card ul {
+  list-style: none;
+  padding: 0;
 }
 
-button[type="submit"] {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #40b4c4;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
+.meal-card li {
+  margin-bottom: 0.5rem;
+  font-size: 16px;
+  color: #2d3436;
 }

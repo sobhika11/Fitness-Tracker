@@ -2,8 +2,8 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const user = localStorage.getItem("userEmail");
-  return user ? children : <Navigate to="/" />;
+  const isLoggedIn = localStorage.getItem("userEmail");
+  return isLoggedIn ? children : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
