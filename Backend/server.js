@@ -1,9 +1,15 @@
-const express=require('express');
-const app=express();
-app.get('/',(rer,res)=> 
-res.send("fitness backend is running")
-);
-const PORT=process.env.PORT || 5000;
-app.listen(PORT, ()=>console.log("server is running on port http://localhost:5000/ "
-    
-)); //to start express server
+require('dotenv').config(); // load .env variables
+const express = require('express');
+const mongoose = require('mongoose');
+const authroutes=require('./routes/Authroutes');
+
+const app = express();
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
+
+app.get('/', (req, res) => res.send("API running..."));
+app.use('/api/auth', authroutes);
+app.use(express.json());
+app.get('/api/auth/signup',(req,res)=>res.send("hey"));
+app.listen(process.env.PORT, () => console.log(`🚀 Server running on port ${process.env.PORT}`));
