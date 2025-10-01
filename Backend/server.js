@@ -1,0 +1,1 @@
+mongosh "mongodb+srv://cluster0.u7yormy.mongodb.net/" --apiVersion 1 --username Sobhika_11 --password Kanisobhi@1130
