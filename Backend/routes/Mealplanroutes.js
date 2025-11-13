@@ -14,6 +14,7 @@ router.post('/meals',(req,res)=>{
     height=height/100
     const BMI=weight/(height*height);
     let BMR,TDEE
+    let bal=200
     if(gender=='female')
         BMR = 10 * weight + 6.25 * height - 5 * age - 161
     else
@@ -22,7 +23,9 @@ router.post('/meals',(req,res)=>{
     res.json({BMI,BMR,TDEE})
     if(diet=='Calorie deficit')
     {
+        TDEE-=500-200
         
+
     }
 
 })
