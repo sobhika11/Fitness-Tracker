@@ -1,8 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FaInstagram, FaFacebookF, FaLeaf } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 
 const Home = () => {
+    
+  const navigate = useNavigate();
+
   return (
     <div className="home-page">
       <section className="hero-section">
@@ -30,8 +34,8 @@ const Home = () => {
               progress, and stay motivated with routines designed for your goal.
             </p>
 
-            <button className="primary-btn">
-              Get Started <FiArrowRight />
+            <button className="primary-btn" onClick={() => navigate("/login")}>
+                Get Started <FiArrowRight />
             </button>
           </div>
 
@@ -119,7 +123,7 @@ const Home = () => {
               className="feature-product"
             />
           </div>
-          
+
         </div>
       </section>
 
