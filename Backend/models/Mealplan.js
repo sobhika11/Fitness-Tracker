@@ -16,6 +16,11 @@ const MealplanSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
+    location: {
+    lat: Number,
+    lng: Number,
+    city: String
+    },
     protein:{
         type:Number,
         required:true
