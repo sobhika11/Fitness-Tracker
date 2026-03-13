@@ -661,6 +661,13 @@ img {
   margin-top: 4px;
 }
 
+.auth-success {
+  color: #481E14;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 4px;
+}
+
 .login-submit-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
