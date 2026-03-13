@@ -654,6 +654,18 @@ img {
   margin-top: 2px;
 }
 
+.auth-error {
+  color: #9B3922;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.login-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .login-submit-btn {
   margin-top: 6px;
   height: 54px;
