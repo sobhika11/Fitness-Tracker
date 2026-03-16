@@ -1607,3 +1607,284 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+.watertracker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.watertracker-alert {
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+.watertracker-error {
+  background: rgba(155, 57, 34, 0.1);
+  color: #9B3922;
+  border: 1px solid rgba(155, 57, 34, 0.15);
+}
+
+.watertracker-success {
+  background: rgba(72, 30, 20, 0.08);
+  color: #481E14;
+  border: 1px solid rgba(72, 30, 20, 0.12);
+}
+
+.watertracker-top-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.water-hero-card {
+  background: linear-gradient(135deg, #481E14 0%, #9B3922 55%, #F2613F 100%);
+  color: white;
+  border-radius: 28px;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 20px;
+  box-shadow: 0 18px 34px rgba(72, 30, 20, 0.12);
+}
+
+.water-hero-left h2 {
+  font-size: 3rem;
+  margin: 8px 0 12px;
+}
+
+.water-hero-left p {
+  line-height: 1.7;
+}
+
+.water-goal-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.water-goal-pill {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 14px 16px;
+  min-width: 130px;
+}
+
+.water-goal-pill span {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.water-goal-pill strong {
+  font-size: 1rem;
+}
+
+.water-hero-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.water-circle-wrap {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.water-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: white;
+  color: #481E14;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.water-goal-card,
+.water-quick-card,
+.water-custom-card,
+.watertracker-tip-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(72, 30, 20, 0.05);
+  border: 1px solid rgba(72, 30, 20, 0.06);
+}
+
+.water-progress-block {
+  margin-bottom: 22px;
+}
+
+.water-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.water-progress-labels p {
+  color: #7e5d54;
+}
+
+.water-progress-labels strong {
+  color: #481E14;
+}
+
+.water-progress-bar {
+  width: 100%;
+  height: 16px;
+  background: #f2e7e1;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.water-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #481E14, #9B3922, #F2613F);
+}
+
+.water-goal-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.water-goal-info-card {
+  background: #f9f4f1;
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.water-goal-info-card span {
+  display: block;
+  color: #9B3922;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.water-goal-info-card strong {
+  color: #481E14;
+}
+
+.watertracker-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.water-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.water-quick-btn {
+  border: none;
+  background: #f8f1ec;
+  color: #481E14;
+  padding: 16px;
+  border-radius: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.water-quick-btn:hover {
+  background: #F2613F;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.water-quick-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.water-custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.water-custom-input {
+  width: 100%;
+  border: 1px solid rgba(72, 30, 20, 0.1);
+  background: #f9f4f1;
+  border-radius: 14px;
+  padding: 14px 14px;
+  outline: none;
+  color: #481E14;
+}
+
+.water-custom-input:focus {
+  border-color: #F2613F;
+}
+
+.water-custom-btn {
+  border: none;
+  background: #481E14;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.water-custom-btn:hover {
+  background: #9B3922;
+  transform: translateY(-2px);
+}
+
+.water-custom-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.water-tip-text {
+  color: #6e5148;
+  line-height: 1.8;
+}
+
+@media (max-width: 1100px) {
+  .watertracker-top-grid,
+  .watertracker-bottom-grid,
+  .water-hero-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .watertracker-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .water-goal-info,
+  .water-quick-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .water-hero-left h2 {
+    font-size: 2.3rem;
+  }
+}
