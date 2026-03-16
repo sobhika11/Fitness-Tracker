@@ -1888,3 +1888,182 @@ img {
     font-size: 2.3rem;
   }
 }
+
+.streak-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.streak-hero-card {
+  background: linear-gradient(135deg, #481E14 0%, #9B3922 55%, #F2613F 100%);
+  color: white;
+  border-radius: 30px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 18px 34px rgba(72, 30, 20, 0.12);
+}
+
+.streak-flame-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-flame-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.streak-hero-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+}
+
+.streak-hero-content p {
+  line-height: 1.7;
+  opacity: 0.95;
+}
+
+.streak-week-card,
+.streak-status-card,
+.streak-motivation-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(72, 30, 20, 0.05);
+  border: 1px solid rgba(72, 30, 20, 0.06);
+}
+
+.streak-week-card {
+  margin-bottom: 20px;
+}
+
+.streak-days-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.streak-day-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.streak-day-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid #e4d7d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #481E14;
+  font-weight: 700;
+  background: #fff;
+  transition: 0.25s ease;
+}
+
+.streak-day-filled {
+  background: linear-gradient(135deg, #9B3922, #F2613F);
+  border-color: transparent;
+  color: white;
+}
+
+.streak-day-today {
+  box-shadow: 0 0 0 6px rgba(242, 97, 63, 0.12);
+}
+
+.streak-day-item span {
+  color: #6e5148;
+  font-weight: 500;
+}
+
+.streak-bottom-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 20px;
+}
+
+.streak-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(72, 30, 20, 0.08);
+}
+
+.streak-status-row:last-child {
+  border-bottom: none;
+}
+
+.streak-status-row p {
+  color: #7e5d54;
+}
+
+.streak-status-row strong {
+  color: #481E14;
+}
+
+.streak-big-message {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0C0C0C;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.streak-badge-large {
+  display: inline-block;
+  margin-top: 18px;
+  background: linear-gradient(135deg, #481E14, #9B3922, #F2613F);
+  color: white;
+  padding: 14px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .streak-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-days-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .streak-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .streak-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .streak-days-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .streak-big-message {
+    font-size: 1.6rem;
+  }
+}
