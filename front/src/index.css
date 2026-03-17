@@ -2482,3 +2482,232 @@ img {
     height: 360px;
   }
 }
+
+.exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.exercise-alert {
+  margin-bottom: 18px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 500;
+}
+
+.exercise-error {
+  background: rgba(155, 57, 34, 0.1);
+  color: #9B3922;
+  border: 1px solid rgba(155, 57, 34, 0.15);
+}
+
+.exercise-success {
+  background: rgba(72, 30, 20, 0.08);
+  color: #481E14;
+  border: 1px solid rgba(72, 30, 20, 0.12);
+}
+
+.exercise-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.exercise-type-card {
+  border: 1px solid rgba(72, 30, 20, 0.08);
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 12px 24px rgba(72, 30, 20, 0.04);
+}
+
+.exercise-type-card:hover,
+.exercise-type-card-active {
+  transform: translateY(-4px);
+  border-color: #F2613F;
+  box-shadow: 0 16px 30px rgba(242, 97, 63, 0.12);
+}
+
+.exercise-card-image {
+  height: 140px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #f4dfd7, #f9efe8);
+  margin-bottom: 16px;
+}
+
+.exercise-type-card h3 {
+  color: #481E14;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.exercise-type-card p {
+  color: #6e5148;
+  line-height: 1.7;
+}
+
+.exercise-section-card {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 24px rgba(72, 30, 20, 0.05);
+  border: 1px solid rgba(72, 30, 20, 0.06);
+  margin-bottom: 20px;
+}
+
+.exercise-section-text {
+  color: #6e5148;
+  line-height: 1.8;
+}
+
+.exercise-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.exercise-item-card {
+  background: #fffdfb;
+  border: 1px solid rgba(72, 30, 20, 0.07);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(72, 30, 20, 0.04);
+}
+
+.exercise-item-image {
+  height: 180px;
+  background: linear-gradient(135deg, #f4dfd7, #f9efe8);
+}
+
+.exercise-item-content {
+  padding: 18px;
+}
+
+.exercise-item-content h4 {
+  color: #481E14;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.exercise-item-content p {
+  color: #6e5148;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.exercise-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.exercise-item-tags span {
+  background: #f8f1ec;
+  color: #9B3922;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.exercise-action-link {
+  display: inline-block;
+  color: #F2613F;
+  font-weight: 600;
+}
+
+.exercise-cardio-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 20px;
+}
+
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.exercise-input {
+  width: 100%;
+  border: 1px solid rgba(72, 30, 20, 0.1);
+  background: #f9f4f1;
+  border-radius: 14px;
+  padding: 14px;
+  outline: none;
+  color: #481E14;
+}
+
+.exercise-input:focus {
+  border-color: #F2613F;
+}
+
+.exercise-primary-btn {
+  border: none;
+  background: linear-gradient(135deg, #481E14, #9B3922, #F2613F);
+  color: white;
+  padding: 14px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.exercise-primary-btn:hover {
+  transform: translateY(-2px);
+}
+
+.exercise-primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.exercise-result-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.exercise-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(72, 30, 20, 0.08);
+}
+
+.exercise-result-row:last-child {
+  border-bottom: none;
+}
+
+.exercise-result-row p {
+  color: #7e5d54;
+}
+
+.exercise-result-row strong {
+  color: #481E14;
+}
+
+@media (max-width: 1100px) {
+  .exercise-overview-grid,
+  .exercise-cards-grid,
+  .exercise-cardio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .exercise-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
