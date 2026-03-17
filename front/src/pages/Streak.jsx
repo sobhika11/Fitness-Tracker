@@ -29,7 +29,8 @@ const Streak = () => {
     { title: "Water Tracker", path: "/water-tracker" },
     { title: "Streak", path: "/streak" },
     { title: "Profile", path: "/profile" },
-    { title: "AI Coach", path: "/ai-coach" }
+    { title: "AI Coach", path: "/ai-coach" },
+    { title: "Exercise", path: "/exercise" },
   ];
 
   const getAuthHeaders = () => ({

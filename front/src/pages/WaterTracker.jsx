@@ -30,7 +30,8 @@ const WaterTracker = () => {
     { title: "Water Tracker", path: "/water-tracker" },
     { title: "Streak", path: "/streak" },
     { title: "Profile", path: "/profile" },
-    { title: "AI Coach", path: "/ai-coach" }
+    { title: "AI Coach", path: "/ai-coach" },
+    { title: "Exercise", path: "/exercise" },
   ];
 
   const quickAddOptions = [250, 500, 750, 1000];

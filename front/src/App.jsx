@@ -8,6 +8,7 @@ import WaterTracker from "./pages/WaterTracker";
 import Streak from "./pages/Streak";
 import Profile from "./pages/Profile";
 import AiCoach from "./pages/AiCoach";
+import Exercise from "./pages/Exercise";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/streak" element={<Streak />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/ai-coach" element={<AiCoach />} />
+        <Route path="/exercise" element={<Exercise />} />
       </Routes>
     </Router>
   );
