@@ -186,7 +186,8 @@ const Exercise = () => {
               <p className="dashboard-greeting">Exercise Module</p>
               <h1>Move your body, build your habit</h1>
               <p className="dashboard-email">
-                Explore aerobics, yoga, and cardio workouts in one elegant space.
+                Explore aerobics, yoga, and cardio workouts in one elegant
+                space.
               </p>
             </div>
 
@@ -213,7 +214,10 @@ const Exercise = () => {
               }`}
               onClick={() => setActiveSection("aerobic")}
             >
-              <div className="exercise-card-image"></div>
+              <div
+                className="exercise-card-image"
+                style={{ backgroundImage: "url('/aerobics.png')" }}
+              ></div>
               <h3>Aerobics</h3>
               <p>Backend-powered aerobic exercise list</p>
             </button>
@@ -224,7 +228,10 @@ const Exercise = () => {
               }`}
               onClick={() => setActiveSection("yoga")}
             >
-              <div className="exercise-card-image"></div>
+              <div
+                className="exercise-card-image"
+                style={{ backgroundImage: "url('/yoga.png')" }}
+              ></div>
               <h3>Flexibility & Yoga</h3>
               <p>Static yoga suggestions with image placeholders</p>
             </button>
@@ -235,7 +242,10 @@ const Exercise = () => {
               }`}
               onClick={() => setActiveSection("cardio")}
             >
-              <div className="exercise-card-image"></div>
+              <div
+                className="exercise-card-image"
+                style={{ backgroundImage: "url('/cardio.png')" }}
+              ></div>
               <h3>Cardio</h3>
               <p>Track cycling workout and calories burned</p>
             </button>
@@ -262,7 +272,9 @@ const Exercise = () => {
               </div>
 
               {loadingAerobic ? (
-                <div className="dashboard-message-card">Loading aerobics...</div>
+                <div className="dashboard-message-card">
+                  Loading aerobics...
+                </div>
               ) : aerobicExercises.length === 0 ? (
                 <div className="dashboard-message-card">
                   No aerobic exercises available.
@@ -312,7 +324,10 @@ const Exercise = () => {
               <div className="exercise-cards-grid">
                 {yogaCards.map((yoga, index) => (
                   <div key={index} className="exercise-item-card">
-                    <div className="exercise-item-image"></div>
+                    <div
+                      className="exercise-item-image"
+                      style={{ backgroundImage: "url('/aasana.png')" }}
+                    ></div>
                     <div className="exercise-item-content">
                       <h4>{yoga.title}</h4>
                       <p>{yoga.subtitle}</p>
@@ -400,7 +415,9 @@ const Exercise = () => {
                     <div className="exercise-result-row">
                       <p>Spotify</p>
                       <strong>
-                        {cyclingResult.cycling?.spotifyUrl ? "Added" : "Not added"}
+                        {cyclingResult.cycling?.spotifyUrl
+                          ? "Added"
+                          : "Not added"}
                       </strong>
                     </div>
                   </div>

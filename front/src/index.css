@@ -2583,7 +2583,10 @@ img {
 
 .exercise-item-image {
   height: 180px;
-  background: linear-gradient(135deg, #f4dfd7, #f9efe8);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px 20px 0 0;
 }
 
 .exercise-item-content {
@@ -2710,4 +2713,25 @@ img {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.exercise-card-image {
+  position: relative;
+  height: 140px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.exercise-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,0.2)
+  );
 }
