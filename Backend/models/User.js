@@ -23,7 +23,14 @@ const userSchema = new mongoose.Schema({
         required:false,
         unique:false
     },
-
+    streakCount: {
+        type: Number,
+        default: 0
+    },
+    lastStreakUpdate: {
+        type: String,
+        default: null
+    }
 });
 const User=mongoose.model('User',userSchema);
 module.exports=User;
