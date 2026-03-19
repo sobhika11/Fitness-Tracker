@@ -45,6 +45,24 @@ const dailyLogSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  cycling: {
+    duration: {
+      type: Number,
+      default: null
+    },
+    distance: {
+      type: Number,
+      default: null
+    },
+    calories: {
+      type: Number,
+      default: null
+    },
+    spotifyUrl: {
+      type: String,
+      default: null
+    }
+  },
   streakCompleted: {
     type: Boolean,
     default: false

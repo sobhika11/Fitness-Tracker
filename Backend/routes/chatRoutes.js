@@ -26,7 +26,6 @@ router.post('/', async (req, res) => {
       return res.status(500).json({ error: "Gemini API key is not configured." });
     }
 
-    // 🔥 Fetch user data
     let user = null;
     let log = null;
 
@@ -42,7 +41,6 @@ router.post('/', async (req, res) => {
       systemInstruction: systemInstruction,
     });
 
-    // 🔥 Build smart prompt
     const prompt = `
 User Details:
 Weight: ${user?.weight || "unknown"}

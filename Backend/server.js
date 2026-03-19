@@ -1,12 +1,13 @@
 require('dotenv').config(); // load .env variables
 const express = require('express');
 const mongoose = require('mongoose');
-const authroutes=require('../routes/Authroutes');
-const chatRoutes = require('../routes/chatRoutes');
-const mealplanRoutes = require('../routes/mealplanRoutes');
-const logRoutes = require('../routes/logRoutes');
-const streakRoutes = require('../routes/StreakRoutes');
-const profileRoutes = require('../routes/profileRoutes');
+const authroutes = require('./routes/Authroutes');
+const chatRoutes = require('./routes/chatRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
+const mealplanRoutes = require('./routes/mealplanRoutes');
+const logRoutes = require('./routes/logRoutes');
+const streakRoutes = require('./routes/StreakRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 
 require('./utils/Remainderemail');
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.get('/', (req, res) => res.send("API running..."));
 app.use('/api/auth', authroutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/exercise', exerciseRoutes);
 app.use('/api/meals', mealplanRoutes);
 app.use('/api/log', logRoutes);
 app.use('/api/streak', streakRoutes);

@@ -1,27 +1,33 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
+
 const userSchema = new mongoose.Schema({
-    username:{
-        type:String,
-        required:true,
-        unique:true
+    username: {
+        type: String,
+        required: true,
+        unique: true
     },
-    password:{
-        type:String,
-        required:true,
-        unique:false
+    password: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true,
-        unique:true
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    phoneNumber:{
-        type:String
+    phoneNumber: {
+        type: String
     },
-    name:{
-        type:String,
-        required:false,
-        unique:false
+    name: {
+        type: String
+    },
+    weight: {
+        type: Number,
+        default: null
+    },
+    goal: {
+        type: String,
+        default: null
     },
     streakCount: {
         type: Number,
@@ -31,6 +37,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null
     }
-});
-const User=mongoose.model('User',userSchema);
-module.exports=User;
+}, { timestamps: true });
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;
