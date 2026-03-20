@@ -1,5 +1,7 @@
-require('dotenv').config(); // load .env variables
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') }); // load .env variables
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const authroutes = require('./routes/Authroutes');
 const chatRoutes = require('./routes/chatRoutes');
@@ -14,6 +16,7 @@ const app = express();
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB connection error:", err));
+app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => res.send("API running..."));
 app.use('/api/auth', authroutes);

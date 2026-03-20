@@ -2,13 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Mealplan = require('../models/Mealplan');
 const DailyLog = require('../models/DailyLog');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const Groq = require('groq-sdk');
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'no-key-provided' });
 router.get('/meal_type', async (req, res) => {
   try {
-    const { meal_type } = req.params;
-    const { city } = req.query;
+    const { meal_type, city } = req.query;
 
     let filter = { meal_type };
     if (city) {
@@ -79,7 +78,7 @@ router.post('/select', async (req, res) => {
   }
 });
 
-router.get('/log/userId', async (req, res) => {
+router.get('/log/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
     const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
@@ -104,57 +103,48 @@ router.get('/log/userId', async (req, res) => {
 router.post('/recommend', async (req, res) => {
   try {
     const { goal, weather, temp } = req.body;
+    
+    if (!process.env.GROQ_API_KEY) {
+      return res.status(500).json({ error: "Groq API key is missing." });
+    }
+
     const meals = await Mealplan.find({}).select('food meal_type calories protein carbs fat serving_size -_id');
     const meal_data_json = JSON.stringify(meals);
-    const prompt = `
-      You are a smart nutritionist.
+    
+    const prompt = `You are a smart nutritionist.
 
-      User details:
-      - Goal: ${goal || 'Healthy Living'}
-      - Weather: ${weather || 'moderate'} (hot / cold / rainy)
-      - Temperature: ${temp || '25'}
+User details:
+- Goal: ${goal || 'Healthy Living'}
+- Weather: ${weather || 'moderate'} (hot / cold / rainy)
+- Temperature: ${temp || '25'}
 
-      Available meals:
-      ${meal_data_json}
+Available meals:
+${meal_data_json}
 
-      Instructions:
-      - If weather is HOT:
-        - Prefer light, hydrating, low-oil foods
-        - Avoid heavy, fried foods
-      - If weather is COLD:
-        - Prefer warm, high-energy foods
-      - If RAINY:
-        - Suggest warm and immunity-boosting foods
+Instructions:
+- If weather is HOT, prefer light, hydrating foods and avoid heavy fried foods.
+- If COLD, prefer warm, high-energy foods.
+- If RAINY, suggest warm and immunity-boosting foods.
 
-      Select best meals for:
-      - breakfast
-      - lunch
-      - dinner
+Select best meals for breakfast, lunch, and dinner from the available meals list.
 
-      Include:
-      - food
-      - calories
-      - protein
-      - carbs
-      - fat
+Return ONLY a valid JSON object matching this exact structure containing the selected meals (no markdown formatting, no other text):
+{
+  "breakfast": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 },
+  "lunch": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 },
+  "dinner": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 }
+}`;
 
-      Return ONLY a valid JSON object matching this exact structure containing the selected meals:
-      {
-        "breakfast": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 },
-        "lunch": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 },
-        "dinner": { "food": "...", "calories": 0, "protein": 0, "carbs": 0, "fat": 0 }
-      }
-      `;
-
-      const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: {
-      responseMimeType: "application/json",
-      }
-      });
-
-    const result = await model.generateContent(prompt);
-    const recommendation = JSON.parse(result.response.text());
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [{ role: 'user', content: prompt }],
+      model: 'llama3-8b-8192',
+      temperature: 0.2,
+      max_tokens: 300,
+      response_format: { type: "json_object" }
+    });
+    
+    let text = chatCompletion.choices[0]?.message?.content || '{}';
+    const recommendation = JSON.parse(text);
     res.json(recommendation);
   } catch (error) {
     console.error("AI Recommendation Error:", error);

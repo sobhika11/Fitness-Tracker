@@ -3,16 +3,21 @@ const router = express.Router();
 const User = require('../models/User');
 const DailyLog = require('../models/DailyLog');
 
-router.get('/userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
+    
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
     const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-    const log = await DailyLog.findOne({ userId, date: today });
+   const mongoose = require("mongoose");
 
+const log = await DailyLog.findOne({
+  userId: new mongoose.Types.ObjectId(userId),
+  date: today
+});
     let todayStats = {
       waterIntake: 0,
       caloriesConsumed: 0,

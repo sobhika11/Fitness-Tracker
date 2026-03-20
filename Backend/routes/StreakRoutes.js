@@ -56,7 +56,7 @@ const updateStreak = async (userId) => {
   return { streakCompleted: todayCompleted, streakCount: newStreakVal };
 };
 
-router.get('/userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
     
