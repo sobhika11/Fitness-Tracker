@@ -1,6 +1,71 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+export const getMealPlan = async (mealType) => {
+  try {
+    // 1. Get the user's location using browser's geolocation API
+    const position = await new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error("Geolocation is not supported by your browser."));
+      } else {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      }
+    });
+
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    console.log(`Detected coordinates: Latitude ${lat}, Longitude ${lon}`);
+
+    // 2. Convert latitude and longitude into a city name using OpenCage API
+    const openCageApiKey = 'YOUR_OPENCAGE_API_KEY'; // Replace with actual key
+    const geoResponse = await fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${openCageApiKey}`);
+
+    if (!geoResponse.ok) {
+      throw new Error('Failed to fetch location data from geocoding API.');
+    }
+
+    const geoData = await geoResponse.json();
+
+    const city = geoData.results[0]?.components?.city
+      || geoData.results[0]?.components?.town
+      || geoData.results[0]?.components?.village
+      || "Unknown Location";
+
+    console.log(`Detected City: ${city}`);
+
+    if (city === "Unknown Location") {
+      throw new Error('Could not determine city from coordinates.');
+    }
+
+    // 3 & 4. Send a POST request to the backend API with the city and meal_type
+    const mealPlanResponse = await fetch('http://localhost:5001/api/mealplan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        city: city,
+        meal_type: mealType
+      })
+    });
+
+    if (!mealPlanResponse.ok) {
+      throw new Error(`Backend API error! status: ${mealPlanResponse.status}`);
+    }
+
+    // 5 & 6. Handle the result and log it
+    const mealPlanData = await mealPlanResponse.json();
+    console.log('Successfully fetched meal plan:', mealPlanData);
+
+    return mealPlanData;
+
+  } catch (error) {
+    // 6. Handle errors properly and log results in console
+    console.error('Error fetching meal plan:', error.message);
+    return null;
+  }
+};
+
 const MealPlanner = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,6 +82,7 @@ const MealPlanner = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [activeTab, setActiveTab] = useState("breakfast");
+  const [mealImages, setMealImages] = useState({});
   const [city, setCity] = useState("");
   const [goal, setGoal] = useState("Healthy Living");
   const [weather, setWeather] = useState("moderate");
@@ -25,26 +91,26 @@ const MealPlanner = () => {
   const [mealsByType, setMealsByType] = useState({
     breakfast: [],
     lunch: [],
-    dinner: []
+    dinner: [],
   });
 
   const [selectedMeals, setSelectedMeals] = useState({
     breakfast: "skipped",
     lunch: "skipped",
-    dinner: "skipped"
+    dinner: "skipped",
   });
 
   const [savedMealNames, setSavedMealNames] = useState({
     breakfast: "Not selected yet",
     lunch: "Not selected yet",
-    dinner: "Not selected yet"
+    dinner: "Not selected yet",
   });
 
   const [nutritionTotals, setNutritionTotals] = useState({
     totalCalories: 0,
     totalProtein: 0,
     totalCarbs: 0,
-    totalFat: 0
+    totalFat: 0,
   });
 
   const [recommendation, setRecommendation] = useState(null);
@@ -68,7 +134,7 @@ const MealPlanner = () => {
 
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {})
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   });
 
   const today = new Date().toISOString().split("T")[0];
@@ -88,7 +154,7 @@ const MealPlanner = () => {
       const possibleUrls = [
         `${API_BASE_URL}/api/meals/meal_type?meal_type=${mealType}${city ? `&city=${encodeURIComponent(city)}` : ""}`,
         `${API_BASE_URL}/api/meals/${mealType}${city ? `?city=${encodeURIComponent(city)}` : ""}`,
-        `${API_BASE_URL}/api/meals/meal_type/${mealType}${city ? `?city=${encodeURIComponent(city)}` : ""}`
+        `${API_BASE_URL}/api/meals/meal_type/${mealType}${city ? `?city=${encodeURIComponent(city)}` : ""}`,
       ];
 
       let data = [];
@@ -110,7 +176,7 @@ const MealPlanner = () => {
 
       setMealsByType((prev) => ({
         ...prev,
-        [mealType]: data
+        [mealType]: data,
       }));
     } catch (err) {
       setError("Failed to load meals");
@@ -125,7 +191,7 @@ const MealPlanner = () => {
 
     const possibleUrls = [
       `${API_BASE_URL}/api/meals/log/${userId}`,
-      `${API_BASE_URL}/api/meals/log/userId`
+      `${API_BASE_URL}/api/meals/log/userId`,
     ];
 
     for (const url of possibleUrls) {
@@ -137,14 +203,14 @@ const MealPlanner = () => {
           setSavedMealNames({
             breakfast: data.meals?.breakfast || "Not selected yet",
             lunch: data.meals?.lunch || "Not selected yet",
-            dinner: data.meals?.dinner || "Not selected yet"
+            dinner: data.meals?.dinner || "Not selected yet",
           });
 
           setNutritionTotals({
             totalCalories: data.totalCalories || 0,
             totalProtein: data.totalProtein || 0,
             totalCarbs: data.totalCarbs || 0,
-            totalFat: data.totalFat || 0
+            totalFat: data.totalFat || 0,
           });
 
           break;
@@ -157,7 +223,7 @@ const MealPlanner = () => {
 
   useEffect(() => {
     if (!storedUser?.id) {
-      navigate("/meal-planner");
+      navigate("/login");
       return;
     }
     fetchSavedLog();
@@ -170,12 +236,12 @@ const MealPlanner = () => {
   const handleSelectMeal = (mealType, mealId, mealFood) => {
     setSelectedMeals((prev) => ({
       ...prev,
-      [mealType]: mealId
+      [mealType]: mealId,
     }));
 
     setSavedMealNames((prev) => ({
       ...prev,
-      [mealType]: mealFood
+      [mealType]: mealFood,
     }));
 
     setSuccess("");
@@ -194,8 +260,8 @@ const MealPlanner = () => {
         body: JSON.stringify({
           goal,
           weather,
-          temp
-        })
+          temp,
+        }),
       });
 
       const data = await res.json();
@@ -230,8 +296,8 @@ const MealPlanner = () => {
           date: today,
           breakfast: selectedMeals.breakfast,
           lunch: selectedMeals.lunch,
-          dinner: selectedMeals.dinner
-        })
+          dinner: selectedMeals.dinner,
+        }),
       });
 
       const data = await res.json();
@@ -244,13 +310,13 @@ const MealPlanner = () => {
         totalCalories: data.totalCalories || 0,
         totalProtein: data.totalProtein || 0,
         totalCarbs: data.totalCarbs || 0,
-        totalFat: data.totalFat || 0
+        totalFat: data.totalFat || 0,
       });
 
       setSavedMealNames({
         breakfast: data.meals?.breakfast || savedMealNames.breakfast,
         lunch: data.meals?.lunch || savedMealNames.lunch,
-        dinner: data.meals?.dinner || savedMealNames.dinner
+        dinner: data.meals?.dinner || savedMealNames.dinner,
       });
 
       setSuccess("Meals saved successfully");
@@ -261,20 +327,63 @@ const MealPlanner = () => {
     }
   };
 
+  const fetchMealImage = async (query) => {
+    try {
+      const res = await fetch(
+        `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+          query,
+        )}&per_page=1&client_id=${import.meta.env.VITE_UNSPLASH_KEY}`,
+      );
+
+      const data = await res.json();
+      return data.results?.[0] || null;
+    } catch (err) {
+      console.error("Meal image fetch failed:", err);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const loadMealImages = async () => {
+      const images = {};
+
+      for (const type of ["breakfast", "lunch", "dinner"]) {
+        for (const meal of mealsByType[type] || []) {
+          const key = meal._id || meal.food;
+
+          if (!images[key]) {
+            const photo = await fetchMealImage(`${meal.food} food`);
+
+            if (photo) {
+              images[key] = {
+                url: photo.urls.small,
+                author: photo.user.name,
+                link: photo.user.links.html,
+              };
+            }
+          }
+        }
+      }
+
+      setMealImages(images);
+    };
+
+    loadMealImages();
+  }, [mealsByType]);
+
   return (
     <div className="dashboard-shell">
       <div className="dashboard-content-wrap">
         <header className="app-topbar">
-          <div className="app-brand">FITORA</div>
+          <div className="app-brand">FITSYNC</div>
 
           <nav className="app-topnav">
             {navLinks.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`app-topnav-link ${
-                  location.pathname === item.path ? "app-topnav-active" : ""
-                }`}
+                className={`app-topnav-link ${location.pathname === item.path ? "app-topnav-active" : ""
+                  }`}
               >
                 {item.title}
               </Link>
@@ -304,9 +413,8 @@ const MealPlanner = () => {
 
           {(error || success) && (
             <div
-              className={`mealplanner-alert ${
-                error ? "mealplanner-error" : "mealplanner-success"
-              }`}
+              className={`mealplanner-alert ${error ? "mealplanner-error" : "mealplanner-success"
+                }`}
             >
               {error || success}
             </div>
@@ -359,7 +467,10 @@ const MealPlanner = () => {
                 />
               </div>
 
-              <button className="mealplanner-primary-btn" onClick={handleRecommend}>
+              <button
+                className="mealplanner-primary-btn"
+                onClick={handleRecommend}
+              >
                 {loadingRecommend ? "Loading..." : "Get Recommendations"}
               </button>
 
@@ -367,10 +478,10 @@ const MealPlanner = () => {
                 {["breakfast", "lunch", "dinner"].map((type) => (
                   <div key={type} className="mealplanner-mini-card">
                     <p className="meal-type-label">{type}</p>
-                    <h4>{recommendation?.[type]?.food || "No suggestion yet"}</h4>
-                    <span>
-                      {recommendation?.[type]?.calories ?? 0} kcal
-                    </span>
+                    <h4>
+                      {recommendation?.[type]?.food || "No suggestion yet"}
+                    </h4>
+                    <span>{recommendation?.[type]?.calories ?? 0} kcal</span>
                   </div>
                 ))}
               </div>
@@ -399,7 +510,10 @@ const MealPlanner = () => {
                 <strong>{nutritionTotals.totalFat} g</strong>
               </div>
 
-              <button className="mealplanner-secondary-btn" onClick={handleSaveSelection}>
+              <button
+                className="mealplanner-secondary-btn"
+                onClick={handleSaveSelection}
+              >
                 {savingMeals ? "Saving..." : "Save Selected Meals"}
               </button>
             </div>
@@ -449,17 +563,47 @@ const MealPlanner = () => {
                 {mealsByType[activeTab].map((meal, index) => (
                   <div
                     key={meal._id || `${meal.food}-${index}`}
-                    className={`meal-food-card ${
-                      selectedMeals[activeTab] === meal._id ? "meal-food-card-selected" : ""
-                    }`}
+                    className={`meal-food-card ${selectedMeals[activeTab] === meal._id
+                      ? "meal-food-card-selected"
+                      : ""
+                      }`}
                   >
-                    <div className="meal-food-image-wrap">
+                    <div
+                      className="meal-food-image-wrap"
+                      style={{
+                        backgroundImage: mealImages[meal._id || meal.food]?.url
+                          ? `url(${mealImages[meal._id || meal.food].url})`
+                          : "url('/meals.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    >
                       <div className="meal-food-image-badge">{activeTab}</div>
                     </div>
 
                     <div className="meal-food-content">
                       <h4>{meal.food}</h4>
                       <p>{meal.serving_size}</p>
+
+                      {mealImages[meal._id || meal.food] && (
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            margin: "6px 0",
+                            color: "#6b4a3f",
+                          }}
+                        >
+                          Photo by{" "}
+                          <a
+                            href={mealImages[meal._id || meal.food].link}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {mealImages[meal._id || meal.food].author}
+                          </a>{" "}
+                          on Unsplash
+                        </p>
+                      )}
 
                       <div className="meal-food-macros">
                         <span>{meal.calories} kcal</span>

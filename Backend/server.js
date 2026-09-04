@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => res.send("API running..."));
 app.use('/api/auth', authroutes);
-app.use('/api/chat', chatRoutes);
+app.use('/api/ai-coach', chatRoutes);
 app.use('/api/exercise', exerciseRoutes);
 app.use('/api/meals', mealplanRoutes);
 app.use('/api/log', logRoutes);

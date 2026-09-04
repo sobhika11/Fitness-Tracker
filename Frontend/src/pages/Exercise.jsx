@@ -19,10 +19,11 @@ const Exercise = () => {
   const [activeSection, setActiveSection] = useState("overview");
   const [aerobicExercises, setAerobicExercises] = useState([]);
   const [loadingAerobic, setLoadingAerobic] = useState(false);
+  const [yogaImages, setYogaImages] = useState({});
   const [cyclingForm, setCyclingForm] = useState({
     duration: "",
     distance: "",
-    spotifyUrl: ""
+    spotifyUrl: "",
   });
   const [cyclingResult, setCyclingResult] = useState(null);
   const [savingCycling, setSavingCycling] = useState(false);
@@ -36,31 +37,90 @@ const Exercise = () => {
     { title: "Streak", path: "/streak" },
     { title: "Profile", path: "/profile" },
     { title: "AI Coach", path: "/ai-coach" },
-    { title: "Exercise", path: "/exercise" }
+    { title: "Exercise", path: "/exercise" },
   ];
 
   const yogaCards = [
-    {
-      title: "Surya Namaskar",
-      subtitle: "Full body warmup flow"
-    },
-    {
-      title: "Bhujangasana",
-      subtitle: "Back opening stretch"
-    },
-    {
-      title: "Vrikshasana",
-      subtitle: "Balance and posture"
-    },
-    {
-      title: "Balasana",
-      subtitle: "Relaxation and recovery"
+  {
+    title: "Surya Namaskar",
+    subtitle: "Full body warmup flow",
+  },
+  {
+    title: "Bhujangasana",
+    subtitle: "Back opening stretch",
+  },
+  {
+    title: "Vrikshasana",
+    subtitle: "Balance and posture",
+  },
+  {
+    title: "Balasana",
+    subtitle: "Relaxation and recovery",
+  },
+  {
+    title: "Adho Mukha Svanasana",
+    subtitle: "Full body stretch and blood flow",
+  },
+  {
+    title: "Trikonasana",
+    subtitle: "Improves flexibility and digestion",
+  },
+  {
+    title: "Paschimottanasana",
+    subtitle: "Deep stretch for spine and hamstrings",
+  },
+  {
+    title: "Dhanurasana",
+    subtitle: "Improves spine flexibility and energy",
+  },
+  {
+    title: "Shavasana",
+    subtitle: "Deep relaxation and recovery",
+  },
+];
+
+  const fetchYogaImage = async (query) => {
+    try {
+      const res = await fetch(
+        `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+          query,
+        )}&per_page=1&client_id=${import.meta.env.VITE_UNSPLASH_KEY}`,
+      );
+
+      const data = await res.json();
+      return data.results?.[0] || null;
+    } catch (err) {
+      console.error("Unsplash fetch failed:", err);
+      return null;
     }
-  ];
+  };
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const images = {};
+
+      for (const yoga of yogaCards) {
+        const photo = await fetchYogaImage(`${yoga.title} yoga pose`);
+
+        if (photo) {
+          images[yoga.title] = {
+            url: photo.urls?.small || photo.urls?.regular,
+            author: photo.user?.name,
+            link: photo.user?.links?.html,
+            download: photo.links?.download_location,
+          };
+        }
+      }
+
+      setYogaImages(images);
+    };
+
+    loadImages();
+  }, []);
 
   const getAuthHeaders = () => ({
     "Content-Type": "application/json",
-    ...(token ? { Authorization: `Bearer ${token}` } : {})
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   });
 
   const handleLogout = () => {
@@ -75,7 +135,7 @@ const Exercise = () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/api/exercise/aerobic`, {
-        headers: getAuthHeaders()
+        headers: getAuthHeaders(),
       });
 
       const data = await response.json();
@@ -92,6 +152,14 @@ const Exercise = () => {
     }
   };
 
+  const getYoutubeThumbnail = (url) => {
+    if (!url) return "";
+
+    const match = url.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/);
+
+    return match ? `https://img.youtube.com/vi/${match[1]}/0.jpg` : "";
+  };
+
   useEffect(() => {
     if (activeSection === "aerobic") {
       loadAerobicExercises();
@@ -102,7 +170,7 @@ const Exercise = () => {
     const { name, value } = e.target;
     setCyclingForm((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -111,7 +179,7 @@ const Exercise = () => {
 
     const userId = storedUser?.id;
     if (!userId) {
-      navigate("/exercise");
+      navigate("/login");
       return;
     }
 
@@ -123,7 +191,7 @@ const Exercise = () => {
     try {
       const payload = {
         userId,
-        spotifyUrl: cyclingForm.spotifyUrl || undefined
+        spotifyUrl: cyclingForm.spotifyUrl || undefined,
       };
 
       if (cyclingForm.duration) payload.duration = Number(cyclingForm.duration);
@@ -132,7 +200,7 @@ const Exercise = () => {
       const response = await fetch(`${API_BASE_URL}/api/exercise/cycling`, {
         method: "POST",
         headers: getAuthHeaders(),
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -146,7 +214,7 @@ const Exercise = () => {
       setCyclingForm({
         duration: "",
         distance: "",
-        spotifyUrl: ""
+        spotifyUrl: "",
       });
     } catch (err) {
       setError(err.message || "Failed to save cycling workout");
@@ -159,7 +227,7 @@ const Exercise = () => {
     <div className="dashboard-shell">
       <div className="dashboard-content-wrap">
         <header className="app-topbar">
-          <div className="app-brand">FITORA</div>
+          <div className="app-brand">FITSYNC</div>
 
           <nav className="app-topnav">
             {navLinks.map((item) => (
@@ -286,7 +354,15 @@ const Exercise = () => {
                       key={`${exercise.name}-${index}`}
                       className="exercise-item-card"
                     >
-                      <div className="exercise-item-image"></div>
+                      <div
+                        className="exercise-item-image"
+                        style={{
+                          backgroundImage: `url(${
+                            getYoutubeThumbnail(exercise.videoUrl) ||
+                            `https://source.unsplash.com/400x300/?fitness,${exercise.name}`
+                          })`,
+                        }}
+                      ></div>
                       <div className="exercise-item-content">
                         <h4>{exercise.name}</h4>
                         <p>{exercise.description || "Aerobic routine"}</p>
@@ -326,15 +402,38 @@ const Exercise = () => {
                   <div key={index} className="exercise-item-card">
                     <div
                       className="exercise-item-image"
-                      style={{ backgroundImage: "url('/aasana.png')" }}
+                      style={{
+                        backgroundImage: yogaImages[yoga.title]?.url
+                          ? `url(${yogaImages[yoga.title].url})`
+                          : "url('/yoga.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                      }}
                     ></div>
+
                     <div className="exercise-item-content">
                       <h4>{yoga.title}</h4>
                       <p>{yoga.subtitle}</p>
+
                       <div className="exercise-item-tags">
                         <span>Yoga</span>
                         <span>Beginner Friendly</span>
                       </div>
+
+                      {yogaImages[yoga.title] && (
+                        <p style={{ fontSize: "12px" }}>
+                          Photo by{" "}
+                          <a
+                            href={yogaImages[yoga.title].link}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {yogaImages[yoga.title].author}
+                          </a>{" "}
+                          on Unsplash
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}

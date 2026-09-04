@@ -11,7 +11,7 @@ const Home = () => {
     <div className="home-page">
       <section className="hero-section">
         <header className="navbar">
-          <div className="logo">FITORA</div>
+          <div className="logo">FITSYNC</div>
 
           <nav className="nav-links">
             <a href="#components">Core Features</a>
@@ -20,7 +20,7 @@ const Home = () => {
         </header>
 
         <div className="hero-content">
-          <div className="hero-bg-text">FITORA</div>
+          <div className="hero-bg-text">FITSYNC</div>
 
           <div className="hero-left">
             <p className="hero-tag">100% Personalized Fitness Journey</p>
@@ -59,9 +59,12 @@ const Home = () => {
           </div>
 
           <div className="hero-socials">
-            <a href="/"><FaInstagram /></a>
-            <a href="/"><FaFacebookF /></a>
-            <a href="/"><FaLeaf /></a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
+              <FaFacebookF />
+            </a>
           </div>
         </div>
       </section>

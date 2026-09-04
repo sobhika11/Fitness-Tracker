@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Signup = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: ""
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -22,18 +24,20 @@ const Login = () => {
     }));
   };
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          username: formData.username,
           email: formData.email,
           password: formData.password
         })
@@ -42,13 +46,14 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || "Signup failed");
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      setSuccess(data.message || "Account created successfully");
 
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
     } catch (err) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -59,14 +64,14 @@ const Login = () => {
   return (
     <section className="login-page">
       <header className="login-topbar">
-        <div className="login-brand">FITORA</div>
+        <div className="login-brand">FITSYNC</div>
 
         <div className="login-top-actions">
           <Link to="/" className="login-top-link">
             Home
           </Link>
-          <Link to="/signup" className="login-demo-btn">
-            Sign up
+          <Link to="/login" className="login-demo-btn">
+            Login
           </Link>
         </div>
       </header>
@@ -80,12 +85,24 @@ const Login = () => {
 
         <div className="login-card-wrapper">
           <div className="login-card">
-            <h2>Login</h2>
+            <h2>Create Account</h2>
             <p className="login-subtitle">
-              Hey, enter your details to sign in to your account
+              Enter your details to create your fitness account
             </p>
 
-            <form className="login-form" onSubmit={handleLogin}>
+            <form className="login-form" onSubmit={handleSignup}>
+              <div className="input-group">
+                <span className="input-icon">👤</span>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Enter your username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
               <div className="input-group">
                 <span className="input-icon">✉</span>
                 <input
@@ -103,7 +120,7 @@ const Login = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  placeholder="Enter your password here"
+                  placeholder="Create your password"
                   value={formData.password}
                   onChange={handleChange}
                   required
@@ -117,35 +134,18 @@ const Login = () => {
                 </button>
               </div>
 
-              <p className="trouble-text">Having trouble signing in?</p>
-
               {error && <p className="auth-error">{error}</p>}
+              {success && <p className="auth-success">{success}</p>}
 
               <button type="submit" className="login-submit-btn" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
+                {loading ? "Creating Account..." : "Sign Up"}
               </button>
             </form>
 
-            <div className="login-divider-text">Single Sign On</div>
-
-            <div className="social-login-divider">
-              <span></span>
-              <p>Or Sign in with</p>
-              <span></span>
-            </div>
-
-            <div className="social-login-row">
-              <button type="button" className="social-btn">f</button>
-              <button type="button" className="social-btn">G</button>
-              <button type="button" className="social-btn">in</button>
-              <button type="button" className="social-btn">X</button>
-              <button type="button" className="social-btn"></button>
-            </div>
-
             <p className="login-footer-text">
-              Don&apos;t have an account?{" "}
-              <Link to="/signup" className="login-inline-link">
-                Sign up
+              Already have an account?{" "}
+              <Link to="/login" className="login-inline-link">
+                Login
               </Link>
             </p>
           </div>
@@ -165,7 +165,7 @@ const Login = () => {
       </div>
 
       <footer className="login-footer">
-        <p>Copyright @FITORA 2026</p>
+        <p>Copyright @FITSYNC 2026</p>
         <div className="footer-links">
           <a href="/">Privacy Policy</a>
           <a href="/">Terms & Conditions</a>
@@ -175,4 +175,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

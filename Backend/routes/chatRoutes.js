@@ -1,5 +1,4 @@
 const express = require('express');
-const Groq = require('groq-sdk');
 const mongoose = require('mongoose');
 
 const User = require('../models/User');
@@ -7,21 +6,8 @@ const DailyLog = require('../models/DailyLog');
 
 const router = express.Router();
 
-// Initialize Groq client
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-});
-
-// System instruction (AI personality)
-const systemInstruction = `
-You are a friendly and motivating fitness coach.
-Give short, practical advice.
-Focus on Indian diet and simple workouts.
-Talk like a real human, not robotic.
-Encourage consistency and positivity.
-`;
-
 router.post('/', async (req, res) => {
+  console.log("AI route hit", req.body);
   try {
     const { message, userId, history = [] } = req.body;
 
@@ -36,58 +22,42 @@ router.post('/', async (req, res) => {
         error: "Groq API key is missing. Add GROQ_API_KEY in .env"
       });
     }
-
-    let user = null;
-    let log = null;
-
-    // ✅ Safe userId handling
-    if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+    // Fetch user and daily log for context
+    let user;
+    let log;
+    if (userId) {
       user = await User.findById(userId);
-
-      const today = new Date().toLocaleDateString("en-CA");
-
-      log = await DailyLog.findOne({
-        userId: new mongoose.Types.ObjectId(userId),
-        date: today
-      });
-    } else {
-      console.log("⚠️ Invalid or missing userId:", userId);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      log = await DailyLog.findOne({ userId, date: today });
     }
 
-    // ✅ Safe history handling
-    const limitedHistory = Array.isArray(history) ? history.slice(-6) : [];
+    const chatCompletion = await fetch(
+      "https://api.groq.com/openai/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "llama-3.1-8b-instant",
+          messages: [
+            { role: "system", content: "You are a friendly and motivating fitness coach. Give short, practical advice." },
+            ...history.slice(-6).map(m => ({ role: m.role, content: m.content || m.text || "Hello" })),
+            { role: "user", content: `User Details: Weight: ${user?.weight || "unknown"} Goal: ${user?.goal || "fitness"} Cal: ${log?.totalCalories || 0}\n\nUser Message: ${message}` }
+          ],
+          max_tokens: 250,
+          temperature: 0.7
+        })
+      }
+    );
 
-    // ✅ Build smart prompt
-    const prompt = `
-User Details:
-Weight: ${user?.weight || "unknown"}
-Goal: ${user?.goal || "fitness"}
-City: ${user?.location?.city || "India"}
+    const data = await chatCompletion.json();
 
-Today's Intake:
-Calories: ${log?.totalCalories || 0}
-Protein: ${log?.totalProtein || 0}
-
-User Message:
-${message}
-`;
-
-    // ✅ Call Groq AI
-    const chatCompletion = await groq.chat.completions.create({
-      messages: [
-        { role: 'system', content: systemInstruction },
-        ...limitedHistory,
-        { role: 'user', content: prompt }
-      ],
-      model: 'llama3-8b-8192',
-      temperature: 0.7,
-      max_tokens: 250
-    });
-
-    // ✅ Safe response extraction
     const reply =
-      chatCompletion?.choices?.[0]?.message?.content ||
-      "Sorry, I couldn't respond properly.";
+      data?.choices?.[0]?.message?.content ||
+      "Sorry, I couldn't respond.";
 
     res.json({ reply });
 

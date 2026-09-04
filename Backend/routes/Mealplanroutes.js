@@ -68,7 +68,7 @@ router.post('/select', async (req, res) => {
     const updatedLog = await DailyLog.findOneAndUpdate(
       { userId, date },
       { $set: logData },
-      { new: true, upsert: true } 
+      { new: true, upsert: true }
     );
 
     res.json(updatedLog);
@@ -103,14 +103,14 @@ router.get('/log/:userId', async (req, res) => {
 router.post('/recommend', async (req, res) => {
   try {
     const { goal, weather, temp } = req.body;
-    
+
     if (!process.env.GROQ_API_KEY) {
       return res.status(500).json({ error: "Groq API key is missing." });
     }
 
     const meals = await Mealplan.find({}).select('food meal_type calories protein carbs fat serving_size -_id');
     const meal_data_json = JSON.stringify(meals);
-    
+
     const prompt = `You are a smart nutritionist.
 
 User details:
@@ -137,12 +137,12 @@ Return ONLY a valid JSON object matching this exact structure containing the sel
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'llama3-8b-8192',
+      model: 'llama-3.1-8b-instant',
       temperature: 0.2,
       max_tokens: 300,
       response_format: { type: "json_object" }
     });
-    
+
     let text = chatCompletion.choices[0]?.message?.content || '{}';
     const recommendation = JSON.parse(text);
     res.json(recommendation);

@@ -66,7 +66,7 @@ const Streak = () => {
     const userId = storedUser?.id;
 
     if (!userId) {
-      navigate("/streak");
+      navigate("/login");
       return;
     }
 
@@ -112,7 +112,7 @@ const Streak = () => {
     <div className="dashboard-shell">
       <div className="dashboard-content-wrap">
         <header className="app-topbar">
-          <div className="app-brand">FITORA</div>
+          <div className="app-brand">FITSYNC</div>
 
           <nav className="app-topnav">
             {navLinks.map((item) => (

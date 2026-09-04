@@ -1,0 +1,31 @@
+{
+  "name": "fitness-tracker",
+  "version": "1.0.0",
+  "description": "A website which enables user to track their fitness, this prescribes the diet plan according the users region. It also have an feature of maintaining streak",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@huggingface/inference": "^4.13.15",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "groq-sdk": "^1.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.3",
+    "node": "^25.8.1",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

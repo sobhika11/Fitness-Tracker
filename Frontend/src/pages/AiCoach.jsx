@@ -54,7 +54,7 @@ const AiCoach = () => {
 
     const userId = storedUser?.id;
     if (!userId) {
-      navigate("/ai-coach");
+      navigate("/login");
       return;
     }
 
@@ -73,7 +73,8 @@ const AiCoach = () => {
     }));
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/chat`, {
+      console.log("Sending AI Request:", { message: trimmedMessage, userId, history: formattedHistory });
+      const response = await fetch(`${API_BASE_URL}/api/ai-coach`, {
         method: "POST",
         headers: getAuthHeaders(),
         body: JSON.stringify({
@@ -124,7 +125,7 @@ const AiCoach = () => {
     <div className="dashboard-shell">
       <div className="dashboard-content-wrap">
         <header className="app-topbar">
-          <div className="app-brand">FITORA</div>
+          <div className="app-brand">FITSYNC</div>
 
           <nav className="app-topnav">
             {navLinks.map((item) => (
